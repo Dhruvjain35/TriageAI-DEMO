@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>triage.ai — Clinical Assessment</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body class="demo-page">
+
+  <div class="shader-bg" id="shaderBg">
+    <canvas id="grainCanvas"></canvas>
+  </div>
+  <div class="plus-pattern-bg"></div>
+
+  <!-- Top bar -->
+  <header class="demo-topbar">
+    <a href="/" class="demo-topbar-logo">triage.ai</a>
+    <div class="demo-topbar-center">
+      <span class="demo-topbar-env">Clinical Assessment Console</span>
+    </div>
+    <div class="demo-topbar-right">
+      <span class="demo-status-dot"></span>
+      <span class="demo-status-text">System Online</span>
+    </div>
+  </header>
+
+  <main class="demo-main">
+    <!-- LEFT: Input -->
+    <section class="demo-input">
+      <div class="demo-input-header">
+        <h1>Patient Assessment</h1>
+        <button class="demo-sample-btn" id="loadSampleBtn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Load Sample
+        </button>
+      </div>
+
+      <form id="patientForm" autocomplete="off">
+        <!-- Demographics -->
+        <div class="field-section">
+          <div class="field-section-label">Demographics</div>
+          <div class="field-grid-2">
+            <div class="field">
+              <label for="age">Age</label>
+              <input type="number" id="age" min="0" max="120" placeholder="Years">
+            </div>
+            <div class="field">
+              <label for="sex">Biological Sex</label>
+              <select id="sex">
+                <option value="" disabled selected>Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chief Complaint -->
+        <div class="field-section">
+          <div class="field-section-label">Presenting Complaint</div>
+          <div class="field">
+            <label for="chiefComplaint">Chief Complaint</label>
+            <input type="text" id="chiefComplaint" placeholder="Describe primary symptoms">
+          </div>
+        </div>
+
+        <!-- Vitals -->
+        <div class="field-section">
+          <div class="field-section-label">Vital Signs</div>
+          <div class="field-grid-3">
+            <div class="field">
+              <label for="heartRate">HR</label>
+              <div class="field-input-wrap">
+                <input type="number" id="heartRate" min="20" max="250" placeholder="—">
+                <span class="field-unit">bpm</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="sbp">SBP</label>
+              <div class="field-input-wrap">
+                <input type="number" id="sbp" min="40" max="300" placeholder="—">
+                <span class="field-unit">mmHg</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="dbp">DBP</label>
+              <div class="field-input-wrap">
+                <input type="number" id="dbp" min="20" max="200" placeholder="—">
+                <span class="field-unit">mmHg</span>
+              </div>
+            </div>
+          </div>
+          <div class="field-grid-3">
+            <div class="field">
+              <label for="o2Sat">SpO2</label>
+              <div class="field-input-wrap">
+                <input type="number" id="o2Sat" min="50" max="100" placeholder="—">
+                <span class="field-unit">%</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="respRate">RR</label>
+              <div class="field-input-wrap">
+                <input type="number" id="respRate" min="4" max="60" placeholder="—">
+                <span class="field-unit">/min</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="temperature">Temp</label>
+              <div class="field-input-wrap">
+                <input type="number" id="temperature" min="90" max="110" step="0.1" placeholder="—">
+                <span class="field-unit">&deg;F</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clinical -->
+        <div class="field-section">
+          <div class="field-section-label">Clinical Assessment</div>
+          <div class="field-grid-2">
+            <div class="field">
+              <label for="gcs">Glasgow Coma Scale</label>
+              <div class="field-input-wrap">
+                <input type="number" id="gcs" min="3" max="15" placeholder="—">
+                <span class="field-unit">/ 15</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="arrivalMode">Arrival Mode</label>
+              <select id="arrivalMode">
+                <option value="" disabled selected>Select</option>
+                <option value="Walk-in">Walk-in</option>
+                <option value="Ambulance">Ambulance</option>
+                <option value="Police">Police</option>
+                <option value="Transfer">Transfer</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="comorbidities">Comorbidity Count</label>
+            <div class="field-slider">
+              <input type="range" id="comorbidities" min="0" max="10" value="0">
+              <span class="field-slider-val" id="comorbiditiesValue">0</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="demo-submit" id="analyzeBtn">
+          <span class="btn-text">Run Assessment</span>
+          <span class="btn-loading"><span class="spinner"></span>Processing...</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- RIGHT: Results -->
+    <section class="demo-results" id="resultsPanel">
+
+      <!-- Empty -->
+      <div class="results-empty" id="resultsEmpty">
+        <div class="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <h3>Awaiting Patient Data</h3>
+          <p>Complete the assessment form and click <strong>Run Assessment</strong> to generate a triage recommendation.</p>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div class="results-loading hidden" id="resultsLoading">
+        <div class="scan-animation"><div class="scan-line"></div><div class="scan-grid"><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div><div class="scan-dot"></div></div></div>
+        <p class="loading-text">Analyzing clinical data...</p>
+      </div>
+
+      <!-- Content -->
+      <div class="results-content hidden" id="resultsContent">
+        <div class="result-header">
+          <div class="esi-badge-container">
+            <div class="esi-badge" id="esiBadge"><span class="esi-level" id="esiLevel">2</span></div>
+            <div class="esi-meta">
+              <span class="esi-label" id="esiLabel">EMERGENT</span>
+              <span class="esi-sublabel">ESI Level <span id="esiLevelText">2</span></span>
+            </div>
+          </div>
+          <div class="confidence-section">
+            <div class="confidence-ring" id="confidenceRing">
+              <svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill" id="ringFill" cx="60" cy="60" r="52"/></svg>
+              <div class="confidence-value"><span id="confidenceValue">0</span><span class="confidence-unit">%</span></div>
+            </div>
+            <span class="confidence-label">Confidence</span>
+          </div>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-block">
+            <h4>Conformal Prediction Set</h4>
+            <div class="conformal-set" id="conformalSet"></div>
+            <p class="conformal-note" id="conformalNote">90% coverage guarantee</p>
+          </div>
+
+          <div class="result-block">
+            <h4>Key Risk Factors</h4>
+            <div class="risk-factors" id="riskFactors"></div>
+          </div>
+
+          <div class="result-block">
+            <h4>Clinical Indicators</h4>
+            <div class="clinical-flags" id="clinicalFlags"></div>
+          </div>
+
+          <div class="result-block result-block-full">
+            <h4>Clinical Recommendation</h4>
+            <div class="recommendation-box" id="recommendationBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="results-error hidden" id="resultsError">
+        <div class="error-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <p class="error-title" id="errorTitle">Backend Unavailable</p>
+        <p class="error-body" id="errorBody"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="grain-shader.js"></script>
+  <script src="app.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => initGrainShader('grainCanvas'));</script>
+</body>
+</html>

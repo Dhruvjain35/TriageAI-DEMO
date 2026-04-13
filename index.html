@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>triage.ai — The Future of Emergency Triage</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- FLOW FIELD (fixed behind entire page) -->
+  <div class="flow-field-wrap" id="flowFieldWrap">
+    <canvas id="flowFieldCanvas"></canvas>
+  </div>
+
+  <!-- ════════════════════════════════════════════ HERO ════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <a href="#hero" class="nav-logo">triage.ai</a>
+          <div class="nav-links">
+            <a href="#about" class="nav-link">About <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+            <a href="#pipeline" class="nav-link">How It Works <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+            <a href="/demo.html" class="nav-link">Demo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+            <a href="#methodology" class="nav-link">Research <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+          </div>
+        </div>
+        <a href="/demo.html" class="btn-pill nav-cta">
+          <span class="btn-pill-glow"></span>
+          <span class="btn-pill-inner">Try Demo</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- HERO CONTENT -->
+    <div class="hero-content">
+      <h1 class="hero-heading">The future of<br>emergency triage.</h1>
+
+      <p class="hero-subtitle">An AI-powered clinical decision support system that predicts Emergency Severity Index in under 200ms — with uncertainty quantification clinicians can trust.</p>
+
+      <a href="/demo.html" class="btn-pill btn-pill-white">
+        <span class="btn-pill-glow"></span>
+        <span class="btn-pill-inner">Try the Demo</span>
+      </a>
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <span class="stat-value" data-target="80000" data-suffix="+">0</span>
+          <span class="stat-label">Patients Trained</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" data-target="5" data-suffix="-Level">0</span>
+          <span class="stat-label">ESI Classification</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" data-target="9999" data-suffix="" data-prefix="0.">0</span>
+          <span class="stat-label">QWK Score</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" data-target="200" data-prefix="<" data-suffix="ms">0</span>
+          <span class="stat-label">Inference Time</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════ ABOUT ════════════════════════════════════════════ -->
+  <section class="section" id="about">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Why we built this</h2>
+      </div>
+      <div class="story-layout">
+        <div class="story-text">
+          <p>Every year, emergency departments across the world process over 130 million visits. Each patient is triaged in under five minutes by a nurse who must decide — based on limited information and under immense pressure — how urgently that patient needs care.</p>
+          <p>Studies show nurses disagree with each other 20–40% of the time. That disagreement costs lives.</p>
+          <p class="story-highlight">We built triage.ai to give every triage nurse an AI second opinion — not to replace their judgment, but to catch the cases they might miss.</p>
+        </div>
+        <div class="story-metrics">
+          <div class="metric-card">
+            <div class="metric-value">130M+</div>
+            <div class="metric-desc">Annual ED visits in the US alone</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">0.60–0.80</div>
+            <div class="metric-desc">Inter-nurse agreement (QWK)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">2–5 min</div>
+            <div class="metric-desc">Average triage decision time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════ ESI REF ════════════════════════════════════════════ -->
+  <section class="section section-alt" id="esi-reference">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Emergency Severity Index</h2>
+        <p class="section-sub">The five-level triage scale used in emergency departments worldwide.</p>
+      </div>
+      <div class="esi-table-wrap">
+        <table class="esi-table">
+          <thead><tr><th>Level</th><th>Name</th><th>Clinical Definition</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><span class="esi-dot esi-1"></span>1</td><td>Resuscitation</td><td>Immediate life-saving intervention required</td><td>Activate trauma / resuscitation team</td></tr>
+            <tr><td><span class="esi-dot esi-2"></span>2</td><td>Emergent</td><td>High risk, severe pain, vital-sign instability</td><td>Bedside evaluation within 10 minutes</td></tr>
+            <tr><td><span class="esi-dot esi-3"></span>3</td><td>Urgent</td><td>Multiple resources expected, vitals stable</td><td>Standard workup, monitor q15min</td></tr>
+            <tr><td><span class="esi-dot esi-4"></span>4</td><td>Less Urgent</td><td>One resource expected</td><td>Single diagnostic or treatment</td></tr>
+            <tr><td><span class="esi-dot esi-5"></span>5</td><td>Non-Urgent</td><td>No ED resources expected</td><td>Fast-track or urgent care referral</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════ PIPELINE ════════════════════════════════════════════ -->
+  <section class="section" id="pipeline">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>From bedside to prediction in five steps</h2>
+        <p class="section-sub">Raw patient data to a calibrated, uncertainty-aware triage recommendation in under 200ms.</p>
+      </div>
+      <div class="pipeline">
+        <div class="pipe-step"><div class="pipe-num">01</div><h3>Data Ingestion</h3><p>Vitals, demographics, chief complaint text, arrival context, comorbidity history.</p><span class="pipe-tag">12 structured features + free-text</span></div>
+        <div class="pipe-line"></div>
+        <div class="pipe-step"><div class="pipe-num">02</div><h3>Feature Engineering</h3><p>816 features: clinical composites (qSOFA, SIRS, shock index, 14 vital flags), dual-channel TF-IDF, and Bayesian target encoding.</p><span class="pipe-tag">Fold-aware encoding prevents leakage</span></div>
+        <div class="pipe-line"></div>
+        <div class="pipe-step"><div class="pipe-num">03</div><h3>4-Model Ensemble</h3><p>LightGBM, XGBoost, CatBoost, and MLP trained with 5-fold CV. Out-of-fold predictions feed the meta-learner.</p><span class="pipe-tag">Diverse inductive biases reduce variance</span></div>
+        <div class="pipe-line"></div>
+        <div class="pipe-step"><div class="pipe-num">04</div><h3>Meta-Learner</h3><p>L1-regularized logistic regression learns per-class model weights. Dual differential-evolution + Nelder-Mead threshold optimization.</p><span class="pipe-tag">Outperforms naive argmax by 0.5–2%</span></div>
+        <div class="pipe-line"></div>
+        <div class="pipe-step"><div class="pipe-num">05</div><h3>Conformal Prediction</h3><p>Split conformal at five alpha levels provides prediction sets with distribution-free coverage guarantees.</p><span class="pipe-tag">No distributional assumptions required</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO CTA -->
+  <section class="section section-alt" id="demo-cta">
+    <div class="section-inner" style="text-align:center;">
+      <div class="section-header">
+        <h2>Try the Live Demo</h2>
+        <p class="section-sub">Enter patient vitals and receive an AI-powered triage recommendation with uncertainty quantification — in under 200ms.</p>
+      </div>
+      <a href="/demo.html" class="btn-pill btn-pill-white" style="display:inline-flex;">
+        <span class="btn-pill-glow"></span>
+        <span class="btn-pill-inner">Open Assessment Console</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════ METHODOLOGY ════════════════════════════════════════════ -->
+  <section class="section" id="methodology">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Built for clinical rigor</h2>
+        <p class="section-sub">Every analysis a reviewer would ask for — built in from day one.</p>
+      </div>
+      <div class="method-grid">
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><h3>4-Model Stacked Ensemble</h3><p>LightGBM, XGBoost, CatBoost, and MLP with learned meta-weights for robust cross-population predictions.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h3>Conformal Prediction</h3><p>Distribution-free uncertainty quantification with guaranteed coverage. Singleton sets auto-accept; multi-element sets route to senior review.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Clinical Composites</h3><p>qSOFA, SIRS, shock index, cardiovascular risk count, and 14 binary vital flags from emergency medicine guidelines.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Demographic Bias Audit</h3><p>Intersectional analysis across sex, age, and language subgroups with chi-squared significance testing.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Dual-Channel NLP</h3><p>Word n-grams for semantics + character n-grams for misspellings, abbreviations, and multilingual robustness.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Probability Calibration</h3><p>ECE analysis ensures confidence scores map to true probabilities. When the model says 80%, it means 80%.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg></div><h3>Noise Robustness</h3><p>Label corruption at 5–25% rates demonstrates graceful degradation under real-world label noise.</p></div>
+        <div class="method-card reveal"><div class="method-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Asymmetric Cost Analysis</h3><p>Undertriage weighted 4x heavier than overtriage. The cost matrix reflects real clinical consequences.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════ RESULTS ════════════════════════════════════════════ -->
+  <section class="section section-alt" id="results">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Performance</h2>
+        <p class="section-sub">Evaluated with 5-fold cross-validation, bootstrap confidence intervals, and ablation analysis.</p>
+      </div>
+      <div class="results-grid">
+        <div class="result-card result-card-highlight"><div class="rc-label">triage.ai Ensemble</div><div class="rc-value">0.9999</div><div class="rc-metric">Quadratic Weighted Kappa</div><div class="rc-bar"><div class="rc-fill" style="width:100%"></div></div></div>
+        <div class="result-card"><div class="rc-label">NEWS2 Baseline</div><div class="rc-value">0.7723</div><div class="rc-metric">Quadratic Weighted Kappa</div><div class="rc-bar"><div class="rc-fill" style="width:77%"></div></div></div>
+        <div class="result-card"><div class="rc-label">Inter-Nurse Agreement</div><div class="rc-value">0.60–0.80</div><div class="rc-metric">Literature QWK Range</div><div class="rc-bar"><div class="rc-fill" style="width:70%"></div></div></div>
+      </div>
+      <div class="caveat">
+        <strong>Note:</strong> Near-perfect QWK reflects synthetic data structure, not real-world generalization. The methodology is designed to remain valuable at realistic accuracy (QWK 0.80–0.92).
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="section-inner">
+      <span class="footer-logo">triage.ai</span>
+      <p>Built by Dhruv Jain & Sriyan Bodla</p>
+      <p class="footer-disclaimer">For research and demonstration purposes only. Not approved for clinical use.</p>
+      <p class="footer-year">&copy; 2026</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
